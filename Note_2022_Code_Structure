@@ -1,1 +1,14 @@
-
+Module used and role：
+  time.time(): 统计的wall time(即墙上时钟)，也就是系统时钟的时间戳
+  argparse: python自带的命令行参数解析包，可以用来方便地读取命令行参数
+  numpy
+  torch
+    torch.nn.functional：F.nll_loss损失函数,多分类任务
+    torch.optim：优化器
+ 
+ FILE Flow:
+  train.py 
+    utils.py  load_data
+    models.py  GCN
+      layers.py GraphConvolution
+    utils.py  accuracy
