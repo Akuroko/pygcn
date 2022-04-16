@@ -6,9 +6,28 @@ Module used and role：
     torch.nn.functional：F.nll_loss损失函数,多分类任务
     torch.optim：优化器
  
- FILE Flow:
+FILE Flow:
   train.py 
     utils.py  load_data
     models.py  GCN
       layers.py GraphConvolution
     utils.py  accuracy
+
+CODE FLOW
+ train.py:
+ 1 参数设置：epochs, lr, weight_decay, hidden, dropout
+ 2 读取数据: adj, features, labels, idx_train, idx_val, idx_test 
+      utils.load_data      
+        np.genfromtxt读取数据为nparray格式，提取属性矩阵，标签one_hot化
+        sp.csr_matrix: 行列序号和对应的值来表示矩阵 
+        idx_features_labels[:,1:-1] : 每一行的去头去尾，得到属性的one-hot矩阵
+        enumerate：返回列表的索引，值
+        sp.coo_matrix: 构造邻接矩阵，表示类型同sp.csr_matrix
+        sp.diags：数列构成对角化矩阵（节点one-hot属性向量处理后的结果）
+        matrix1.dot(matrix2): 矩阵点乘
+        torch.sparse.FloatTensor：由边和边上的值 构建稀疏矩阵
+       返回
+       adj：tensor稀疏矩阵（含有节点和边的属性）
+       features：tensor矩阵 2708*1433（节点数*one-hot属性向量长度）
+       labels：tensor1维向量，每个节点的标签
+       idx_train, idx_val, idx_test：1维tensor数据
